@@ -15,32 +15,32 @@ import Foundation
 /// This class is typically instantiated at the beginning of the application lifecycle
 /// to configure the library according to the specific needs of the application.
 ///
-class Environment {
-    static let shared = Environment()
+class EnvironmentDeprecated {
+    static let shared = EnvironmentDeprecated()
     
     /// The settings for the library, encapsulating various configuration options.
-    let settings: Settings
+    let settings: SettingsDeprecated
 
     /// The storage manager for tags, used to persist tag data.
-    let tagStorage: StorageProtocol
+    let tagStorage: StorageProtocolDeprecated
 
     /// The storage manager for cached records, used to persist cache data.
-    let recordStorage: StorageProtocol
+    let recordStorage: StorageProtocolDeprecated
 
     /// Initializes a new `Environment` instance.
     /// If settings are not provided, default settings are used.
     ///
     /// - Parameter settings: An optional `Settings` instance to customize the library configuration. Defaults to `Settings.defaultSettings`.
-    init(settings: Settings? = nil) {
-        let effectiveSettings = settings ?? Settings.defaultSettings
+    init(settings: SettingsDeprecated? = nil) {
+        let effectiveSettings = settings ?? SettingsDeprecated.defaultSettings
         
         // Retrieve the storage managers from the settings
-        guard let tagStorageManager: StorageProtocol = effectiveSettings.get(setting: .defaultTagStorage) else {
+        guard let tagStorageManager: StorageProtocolDeprecated = effectiveSettings.get(setting: .defaultTagStorage) else {
             fatalError("DefaultTagStorage setting is not a valid StorageProtocol")
         }
 
         self.tagStorage = tagStorageManager
-        guard let recordStorageManager: StorageProtocol = effectiveSettings.get(setting: .defaultDataStorage) else {
+        guard let recordStorageManager: StorageProtocolDeprecated = effectiveSettings.get(setting: .defaultDataStorage) else {
             fatalError("DefaultTagStorage setting is not a valid StorageProtocol")
         }
         

@@ -11,17 +11,17 @@ import Foundation
 /// `KeyProtocol` defines the required interface for a key in the FragmentedKeys library.
 /// It specifies methods for managing tag groups and fetching data using the composite key.
 ///
-protocol KeyProtocol {
+protocol KeyProtocolDeprecated {
     /// The name of the key.
     var name: String { get }
 
     /// The storage mechanism used for caching.
-    var storage: StorageProtocol { get }
+    var storage: StorageProtocolDeprecated { get }
 
     /// Adds a tag group to the key.
     ///
     /// - Parameter tagGroup: A tag group conforming to `TagProtocol`.
-    func addTagGroup(_ tagGroup: TagProtocol)
+    func addTagGroup(_ tagGroup: TagProtocolDeprecated)
 
     /// Generates and retrieves the composite cache key string.
     ///

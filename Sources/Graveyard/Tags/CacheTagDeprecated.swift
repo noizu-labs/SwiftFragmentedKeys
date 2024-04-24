@@ -11,7 +11,7 @@ import Foundation
 /// `CacheTag` is a concrete implementation of `TagProtocol`, specifically designed for cache versioning.
 /// It includes a version number to facilitate cache invalidation mechanisms.
 ///
-class CacheTag: TagProtocol {
+class CacheTagDeprecated: TagProtocolDeprecated {
     let name: String
     let subject: String?
     private(set) var version: Int

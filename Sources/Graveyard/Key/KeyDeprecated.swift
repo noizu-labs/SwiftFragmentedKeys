@@ -11,19 +11,19 @@ import Foundation
 /// `Key` is a concrete implementation of `KeyProtocol`.
 /// It represents a composite key, assembled from multiple tags, with a defined name and storage mechanism.
 ///
-class Key: KeyProtocol {
-    private var name: String
-    private var tagGroups: [TagProtocol]
-    private var storage: StorageProtocol
+class KeyDeprecated: KeyProtocolDeprecated {
+    internal var name: String
+    private var tagGroups: [TagProtocolDeprecated]
+    internal var storage: StorageProtocolDeprecated
 
-    init(name: String, tagGroups: [TagProtocol] = [], storage: StorageProtocol) {
+    init(name: String, tagGroups: [TagProtocolDeprecated] = [], storage: StorageProtocolDeprecated) {
         self.name = name
         self.tagGroups = tagGroups
         self.storage = storage
     }
 
     /// Adds a tag group to the key.
-    func addTagGroup(_ tagGroup: TagProtocol) {
+    func addTagGroup(_ tagGroup: TagProtocolDeprecated) {
         tagGroups.append(tagGroup)
     }
 
@@ -47,9 +47,9 @@ class Key: KeyProtocol {
             return cachedData
         } else {
             let newData = onCacheMiss()
-            if persist {
-                storage.set(object: newData, for: key)
-            }
+//            if persist {
+//                storage.set(object: newData, for: key, new: Bool)
+//            }
             return newData
         }
     }

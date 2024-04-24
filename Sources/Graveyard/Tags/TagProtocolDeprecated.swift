@@ -11,7 +11,7 @@ import Foundation
 /// `TagProtocol` defines a common interface for all tag types in the FragmentedKeys library.
 /// It provides essential functionalities for generating a signature or versioned identifier for a tag.
 ///
-protocol TagProtocol {
+protocol TagProtocolDeprecated {
     var name: String { get }
     var subject: String? { get }
 

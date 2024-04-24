@@ -12,13 +12,13 @@ import Foundation
 /// It supports operations for fetching, setting, removing, and bulk operations for data management.
 ///
 /// This protocol ensures a unified interface for various storage implementations (e.g., `NSCache`, disk, SQL),
-/// facilitating their use within the library regardless of the underlying storage mechanism.
+/// facilitating thkkkeir use within the library regardless of the underlying storage mechanism.
 ///
 /// Usage:
 /// Implementing classes (e.g., `NSCacheStorage`, `DiskStorage`, `SQLStorage`) should provide concrete
 /// implementations of these methods to handle cache data.
 ///
-protocol StorageProtocol {
+protocol StorageProtocolDeprecated {
     /// Fetches a value of a specified type from the storage.
     /// Returns `nil` if the value does not exist or cannot be cast to the requested type.
     ///

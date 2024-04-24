@@ -25,10 +25,10 @@ enum ConfigSetting: Hashable {
 /// Usage:
 /// This structure can be used to configure the library at initialization or to modify settings at runtime.
 ///
-struct Settings {
-    static var factorySettings = Settings(name: "FactorySettings", settings: [
-        .defaultTagStorage: NSCacheStorage.shared,
-        .defaultDataStorage: NSCacheStorage.shared
+struct SettingsDeprecated {
+    static var factorySettings = SettingsDeprecated(name: "FactorySettings", settings: [
+        .defaultTagStorage: NSCacheStorageDeprecated.shared,
+        .defaultDataStorage: NSCacheStorageDeprecated.shared
     ])
     static var defaultSettings = factorySettings
 

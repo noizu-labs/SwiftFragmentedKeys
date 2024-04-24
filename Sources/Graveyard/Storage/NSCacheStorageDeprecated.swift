@@ -14,8 +14,8 @@ import Foundation
 /// Usage:
 /// This class can be used as a caching layer in applications, allowing for efficient, temporary storage of data.
 ///
-class NSCacheStorage: StorageProtocol {
-    static let shared = NSCacheStorage()
+class NSCacheStorageDeprecated: StorageProtocolDeprecated {
+    static let shared = NSCacheStorageDeprecated()
     private let cache = NSCache<NSString, AnyObject>()
 
     /// Retrieves a cached value for a specific key.
