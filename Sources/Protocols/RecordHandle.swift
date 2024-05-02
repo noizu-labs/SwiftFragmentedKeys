@@ -1,0 +1,19 @@
+//
+//  RecordHandle.swift
+//  
+//
+//  Created by Keith Brings on 5/2/24.
+//
+
+import Foundation
+
+
+protocol RecordHandle {
+    func handleName() -> String
+}
+
+extension String : RecordHandle {
+    func handleName() -> String {
+        return self;
+    }
+}
