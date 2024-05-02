@@ -8,7 +8,7 @@
 import Foundation
 
 
-enum TTL {
+enum TTL : Codable {
     case infinity
     case expiry(TimeInterval)
 }

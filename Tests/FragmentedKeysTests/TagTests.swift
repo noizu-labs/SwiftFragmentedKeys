@@ -1,24 +1,7 @@
 import XCTest
 @testable import FragmentedKeys
 
-class FKMTest : FKM {
-    static func reset() {
-        _instance = nil
-    }
-}
 
-class BizBop : Taggable {
-    let identifier: Int
-    let value: String
-    init(identifier: Int, value: String) {
-        self.identifier = identifier
-        self.value = value
-    }
-    func tagHandle() -> String {
-        "ref.biz-bop.\(identifier)"
-    }
-
-}
 
 class FragmentedKeysTests: XCTestCase {
 //    func testExample() throws {
@@ -30,11 +13,14 @@ class FragmentedKeysTests: XCTestCase {
 //    }
 //    
     
-    func setup() {
-        FKMTest.reset()
-        do {
-            try FKM.initialize()
-        } catch {}
+    override func setUp() {
+//        FKMTest.reset()
+//        do {
+//            try FKMDeprecated.initialize()
+//        } catch {}
+//        
+        FKM.configure()
+        super.setUp()
     }
     func testTagIncrement() {
         let b = BizBop(identifier: 1, value: "Apple")

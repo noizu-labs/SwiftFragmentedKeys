@@ -46,6 +46,7 @@ struct NSCacheStoreConfig : DataStoreConfig {
 
 class NSCacheStore : DataStore {
     
+    
     typealias Config = NSCacheStoreConfig
     private let cache = NSCache<NSString, AnyObject>()
     private var config: Config
@@ -70,75 +71,15 @@ class NSCacheStore : DataStore {
         }
     }
     
-    func incrementTag(_ key: RecordHandle) -> TagVersion {
-        if let c = doGetEntry(key) {
-            if let x = c.entry as? TagVersion {
-                let y = x.incrementTagVersion()
-                set(key, to: y, options: SetOptions(ttl: c.ttl))
-                return y
-            }
-            let y = Int(Date().timeIntervalSince1970 * 1000)
-            set(key, to: y, options: SetOptions(ttl: c.ttl))
-            return y
-        }
-        let y = Int(Date().timeIntervalSince1970 * 1000)
-        set(key, to: y, options: SetOptions(ttl: .infinity))
-        return y
-    }
     
-    func currentTag(_ key: RecordHandle) -> TagVersion {
-        if let c = doGetEntry(key) {
-            if let x = c.entry as? TagVersion {
-                return x
-            }
-            let y = Int(Date().timeIntervalSince1970 * 1000)
-            set(key, to: y, options: SetOptions(ttl: c.ttl))
-            return y
-        }
-        let y = Int(Date().timeIntervalSince1970 * 1000)
-        set(key, to: y, options: SetOptions(ttl: .infinity))
-        return y
-    }
-    
-    func get<T: Serializable>(_ key: RecordHandle) -> T? {
-        guard let c = doGet(key) as? T else {
-            return nil
-        }
-        return c
-    }
-    
-    private func doGet(_ key: RecordHandle) -> Serializable? {
-        guard let c = cache.object(forKey: key.handleName() as NSString) as? CacheEntry else {
-            return nil
-        }
-        guard nil != c.entry else {
-            return nil
-        }
-        
-        switch (c.ttl) {
-        case .infinity:
-            return c.entry
-        case .expiry(let i):
-            if (c.storedAt + i) >= Date().timeIntervalSince1970 {
-                return c.entry
-            } else {
-                let entry = CacheEntry(entry: nil, ttl: .infinity)
-                cache.setObject(entry as AnyObject, forKey: key.handleName() as NSString)
-               return nil
-            }
-        }
-    }
-    
-    
-    private func doGetEntry(_ key: RecordHandle) -> CacheEntry? {
+    func getCacheEntry(_ key: any RecordHandle) -> CacheEntry? {
         guard let c = cache.object(forKey: key.handleName() as NSString) as? CacheEntry else {
             return nil
         }
         return c
     }
-    
 
-    func set(_ key: RecordHandle, to: Serializable, options: DataStoreSetOptions? = nil) {
+    func set(_ key: RecordHandle, to: Serializable?, options: DataStoreSetOptions? = nil) {
         if let o = options {
             let entry = CacheEntry(entry: to, ttl: o.ttl ?? config.ttl)
             cache.setObject(entry as AnyObject, forKey: key.handleName() as NSString)
@@ -153,14 +94,4 @@ class NSCacheStore : DataStore {
     }
     
     
-    func multiGet(_ keys: [RecordHandle]) -> [MultiGetResponse] {
-        return keys.map {
-            key in
-            if let c: Serializable = doGet(key) {
-                return .hit(key, c)
-            } else {
-                return .miss(key)
-            }
-        }
-    }
 }

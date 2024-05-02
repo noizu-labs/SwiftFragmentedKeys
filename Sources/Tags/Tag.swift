@@ -47,8 +47,13 @@ class Tag : TagProtocol {
             return self.name
         }
     }
+    func recordType() -> Any?
+    {
+        return TagVersion.self
+    }
+    
     func tagFragment() -> String {
-        return "\(handleName())@\(tagVersion())"
+        return "\(handleName())@\(tagVersion().value)"
     }
     func tagVersion() -> TagVersion {
         guard let v = version else {

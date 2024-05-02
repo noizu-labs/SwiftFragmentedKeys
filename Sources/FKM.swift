@@ -17,38 +17,47 @@ class StandardTelemetry : Telemetry {
 }
 
 class FKM {
-    static var _instance: FKM?
+    //---------------
+    // Static
+    //---------------
+    static var _instance: FKM = FKM()
     static var instance: FKM {
-        get throws {
-            guard let x = _instance else {
-                throw FragmentedKeyError.error(message: "FKM Not Initialized")
-            }
-            return x
+        get {
+            return _instance
+        }
+    }
+    static func configure(tagStore: (any DataStore)? = nil, recordStore: (any DataStore)? = nil) {
+        _instance = FKM(tagStore: tagStore, recordStore: recordStore)
+    }
+    
+    //----------------
+    // Init
+    //----------------
+    init(
+        tagStore: (any DataStore)? = nil,
+        recordStore: (any DataStore)? = nil
+    ) {
+        if let ts = tagStore {
+            self.tagStore = ts
+        } else {
+            self.tagStore = NSCacheStore()
         }
         
-    }
-    static func initialize(
-        tagStore: (any DataStore) = NSCacheStore(),
-        recordStore: (any DataStore) = NSCacheStore(),
-        telemetry: (any Telemetry) = StandardTelemetry()
-    ) throws -> Void {
-        guard nil == _instance else {
-            throw FragmentedKeyError.error(message: "Already Initialized")
+        if let rs = recordStore {
+            self.recordStore = rs
+        } else {
+            self.recordStore = NSCacheStore()
         }
-        _instance = FKM(tagStore: tagStore, recordStore: recordStore, telemetry: telemetry)
     }
-
+    
+    //----------------
+    // Members
+    //----------------
     let tagStore: any DataStore
     let recordStore: any DataStore
-    let telemetry: any Telemetry
-    
-    private init(
-        tagStore: (any DataStore),
-        recordStore: (any DataStore),
-        telemetry: (any Telemetry)) {
-            self.tagStore = tagStore
-            self.recordStore = recordStore
-            self.telemetry = telemetry
-    }
+    var tags: [KeyRingTag] = []
+    var subjects: [String:Taggable] = [:]
+
     
 }
+

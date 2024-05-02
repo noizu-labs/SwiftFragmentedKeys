@@ -8,7 +8,7 @@
 import Foundation
 
 protocol Settings {
-    init?(from: [String: Any?])
+    init?(from: [String: Any?]) throws
 }
 
 

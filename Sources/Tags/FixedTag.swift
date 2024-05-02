@@ -9,11 +9,18 @@ import Foundation
 
 
 class FixedTag : TagProtocol {
+    
     private let name: String
     private let subject: String?
     private let version: TagVersion
     
-    init(name: String, subject: Taggable? = nil, version: TagVersion = 1) {
+    convenience init(name: String, subject: Taggable? = nil) {
+        self.init(name: name, subject: subject, version: TagVersion(version: 1))
+    }
+    convenience init(name: String, subject: Taggable? = nil, version: UInt) {
+        self.init(name: name, subject: subject, version: TagVersion(version: version))
+    }
+    init(name: String, subject: Taggable? = nil, version: TagVersion) {
         self.name = name
         if let s = subject {
             self.subject = s.tagHandle()
@@ -31,13 +38,18 @@ class FixedTag : TagProtocol {
     
     func handleName() -> String {
         if let subject = self.subject {
-            return "\(self.name).\(subject)"
+            return "\(self.name):\(subject)"
         } else {
             return self.name
         }
     }
+    func recordType() -> Any?
+    {
+        return nil
+    }
+
     func tagFragment() -> String {
-        return "\(handleName())@\(version)"
+        return "\(handleName())@\(version.value)"
     }
     func tagVersion() -> TagVersion {
         return self.version

@@ -10,10 +10,15 @@ import Foundation
 
 protocol RecordHandle {
     func handleName() -> String
+    func recordType() -> Any?
 }
 
 extension String : RecordHandle {
     func handleName() -> String {
         return self;
+    }
+    func recordType() -> Any?
+    {
+        return nil
     }
 }

@@ -9,7 +9,9 @@ import Foundation
 
 
 protocol TagProtocol : RecordHandle {
+    //init?(name: String, subject: Taggable?, store: (any DataStore)?)
     var store: (any DataStore)? {get}
-    func tagFragment() throws -> String
-    func tagVersion() throws -> TagVersion
+    func tagFragment() -> String
+    func tagVersion() -> TagVersion
 }
+
